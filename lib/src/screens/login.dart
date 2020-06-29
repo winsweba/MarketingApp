@@ -1,10 +1,12 @@
 import 'package:MarketingApp/src/styles/base.dart';
+import 'package:MarketingApp/src/styles/text.dart';
 import 'package:MarketingApp/src/widgets/button.dart';
+import 'package:MarketingApp/src/widgets/social_button.dart';
 import 'package:MarketingApp/src/widgets/textfield.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
-import '../styles/colors.dart';
 
 class Login extends StatelessWidget {
   @override
@@ -50,10 +52,61 @@ class Login extends StatelessWidget {
           isIOS: Platform.isIOS,
           hintText: 'Password',
           materialIcon: Icons.lock,
-          cupertinoIcon: IconData(0xf4c9, fontFamily: CupertinoIcons.iconFont, fontPackage:CupertinoIcons.iconFontPackage,),
+          cupertinoIcon: IconData(
+            0xf4c9,
+            fontFamily: CupertinoIcons.iconFont,
+            fontPackage: CupertinoIcons.iconFontPackage,
+          ),
           obscureText: true,
         ),
-        AppButton(buttonText: 'Login', buttonType: ButtonType.LightBlue,),
+        AppButton(
+          buttonText: 'Signup',
+          buttonType: ButtonType.LightBlue,
+        ),
+        SizedBox(height: 6.0),
+        Center(
+          child: Text(
+            "Or",
+            style: TextStyles.suggestions,
+          ),
+        ),
+        SizedBox(height: 6.0),
+        Padding(
+          padding: BaseStyles.listPadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AppSocialButton(
+                socialType: SocialType.Facebooke,
+              ),
+              SizedBox(height: 15.0),
+              AppSocialButton(
+                socialType: SocialType.Google,
+              ),
+            ],
+          ),
+        ),
+        Padding(
+          padding: BaseStyles.listPadding,
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: 'Already Have an Account',
+              style: TextStyles.body,
+              children: [
+                TextSpan(
+                  text: 'Login',
+                  style: TextStyles.link,
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () => Navigator.pushNamed(
+                          context,
+                          '/login',
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

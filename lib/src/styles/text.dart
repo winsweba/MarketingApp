@@ -9,6 +9,12 @@ abstract class TextStyles {
     );
   }
 
+  static TextStyle get link {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(color: AppColors.straw, fontSize: 16.0, fontWeight: FontWeight.bold),
+    );
+  }
+
   static TextStyle get suggestions {
     return GoogleFonts.roboto(
       textStyle: TextStyle(color: AppColors.lightgrey, fontSize: 14.0),
