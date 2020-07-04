@@ -1,3 +1,4 @@
+import 'package:MarketingApp/src/blocs/auth_bloc.dart';
 import 'package:MarketingApp/src/styles/base.dart';
 import 'package:MarketingApp/src/styles/text.dart';
 import 'package:MarketingApp/src/widgets/button.dart';
@@ -8,21 +9,40 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class Signup extends StatelessWidget{
+import 'package:provider/provider.dart';
+
+class Signup extends StatefulWidget{
+  @override
+  _SignupState createState() => _SignupState();
+}
+
+class _SignupState extends State<Signup> {
+
+  @override
+  void initState() {
+    final authBloc = Provider.of<AuthBloc>(context, listen: false);
+    authBloc.user.listen((user) {
+      if(user != null ) Navigator.pushReplacementNamed(context, '/landing');
+    });
+    super.initState();
+  }
+
    @override
   Widget build(BuildContext context) {
+    final authBloc = Provider.of<AuthBloc>(context);
+    
     if (Platform.isIOS) {
       return CupertinoPageScaffold(
-        child: pageBody(context),
+        child: pageBody(context, authBloc),
       );
     } else {
       return Scaffold(
-        body: pageBody(context),
+        body: pageBody(context, authBloc),
       );
     }
   }
 
-  Widget pageBody(BuildContext context) {
+  Widget pageBody(BuildContext context, AuthBloc authBloc) {
     return ListView(
       padding: EdgeInsets.all(0.0),
       children: <Widget>[
@@ -41,27 +61,46 @@ class Signup extends StatelessWidget{
               image:
                   DecorationImage(image: AssetImage('assets/images/logo.png'))),
         ),
-        AppTextField(
-          isIOS: Platform.isIOS,
-          hintText: 'Email',
-          materialIcon: Icons.email,
-          cupertinoIcon: CupertinoIcons.mail_solid,
-          textInputType: TextInputType.emailAddress,
+         StreamBuilder<String>(
+          stream: authBloc.email,
+          builder: (context, snapshot) {
+            return AppTextField(
+              isIOS: Platform.isIOS,
+              hintText: 'Email',
+              materialIcon: Icons.email,
+              cupertinoIcon: CupertinoIcons.mail_solid,
+              textInputType: TextInputType.emailAddress,
+              errorText: snapshot.error,
+              onChanged: authBloc.changeEmail,
+            );
+          }
         ),
-        AppTextField(
-          isIOS: Platform.isIOS,
-          hintText: 'Password',
-          materialIcon: Icons.lock,
-          cupertinoIcon: IconData(
-            0xf4c9,
-            fontFamily: CupertinoIcons.iconFont,
-            fontPackage: CupertinoIcons.iconFontPackage,
-          ),
-          obscureText: true,
+        StreamBuilder<String>(
+          stream: authBloc.password,
+          builder: (context, snapshot) {
+            return AppTextField(
+              isIOS: Platform.isIOS,
+              hintText: 'Password',
+              materialIcon: Icons.lock,
+              cupertinoIcon: IconData(
+                0xf4c9,
+                fontFamily: CupertinoIcons.iconFont,
+                fontPackage: CupertinoIcons.iconFontPackage,
+              ),
+              obscureText: true,
+              errorText: snapshot.error,
+              onChanged: authBloc.changePassword,
+            );
+          }
         ),
-        AppButton(
-          buttonText: 'Login',
-          buttonType: ButtonType.LightBlue,
+        StreamBuilder<bool>(
+          stream: authBloc.isValid,
+          builder: (context, snapshot) {
+            return AppButton(
+              buttonText: 'Sigup',
+              buttonType: (snapshot.data == true) ? ButtonType.LightBlue : ButtonType.Disabled, onPressed: authBloc.signupEmail,
+            );
+          }
         ),
         SizedBox(height: 6.0),
         Center(
@@ -79,7 +118,7 @@ class Signup extends StatelessWidget{
               AppSocialButton(
                 socialType: SocialType.Facebooke,
               ),
-              SizedBox(height: 15.0),
+              SizedBox(height: 18.0),
               AppSocialButton(
                 socialType: SocialType.Google,
               ),
@@ -95,7 +134,7 @@ class Signup extends StatelessWidget{
               style: TextStyles.body,
               children: [
                 TextSpan(
-                  text: 'Signup',
+                  text: 'Login',
                   style: TextStyles.link,
                   recognizer: TapGestureRecognizer()
                     ..onTap = () => Navigator.pushNamed(

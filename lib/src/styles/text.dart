@@ -3,6 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 abstract class TextStyles {
+  static TextStyle get title {
+    return GoogleFonts.poppins(
+      textStyle: TextStyle(color: AppColors.darkblue, fontSize: 40.0, fontWeight: FontWeight.bold ),
+    );
+  }
+
+  static TextStyle get navTitle {
+    return GoogleFonts.poppins(
+      textStyle: TextStyle(color: AppColors.darkblue,fontWeight: FontWeight.bold ),
+    );
+  }
+
   static TextStyle get body {
     return GoogleFonts.roboto(
       textStyle: TextStyle(color: AppColors.darkgrey, fontSize: 16.0),
@@ -18,6 +30,12 @@ abstract class TextStyles {
   static TextStyle get suggestions {
     return GoogleFonts.roboto(
       textStyle: TextStyle(color: AppColors.lightgrey, fontSize: 14.0),
+    );
+  }
+
+  static TextStyle get error {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(color: AppColors.red, fontSize: 12.0),
     );
   }
 
