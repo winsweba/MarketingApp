@@ -1,7 +1,9 @@
 import 'package:MarketingApp/src/blocs/auth_bloc.dart';
+import 'package:MarketingApp/src/blocs/product_bloc.dart';
 import 'package:MarketingApp/src/routes.dart';
 import 'package:MarketingApp/src/screens/landing.dart';
 import 'package:MarketingApp/src/screens/login.dart';
+import 'package:MarketingApp/src/services/firestore_service.dart';
 import 'package:MarketingApp/src/styles/colors.dart';
 import 'package:MarketingApp/src/styles/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,26 +12,33 @@ import 'dart:io';
 
 import 'package:provider/provider.dart';
 
+final authBloc = AuthBloc();
+final productBloc = ProductBloc();
+final firestoreService = FirestoreService();
+
 class App extends StatefulWidget {
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<App> {
-  final authBloc = AuthBloc();
+  
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider( 
       providers: [
-        Provider(create: (context) => authBloc,), 
+        Provider(create: (context) => authBloc,),
+        Provider(create: (context) => productBloc,), 
         FutureProvider(create: (context) => authBloc.isLoggedIn()),
+        StreamProvider(create: (context) => firestoreService.fetchUnitTypes()),
       ],
       child: PlatformApp());
   }
 @override
   void dispose() {
     authBloc.dispose();
+    productBloc.displose();
     super.dispose();
   }
 

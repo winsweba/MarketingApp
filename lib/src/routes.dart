@@ -1,3 +1,4 @@
+import 'package:MarketingApp/src/screens/edit_product.dart';
 import 'package:MarketingApp/src/screens/landing.dart';
 import 'package:MarketingApp/src/screens/login.dart';
 import 'package:MarketingApp/src/screens/signup.dart';
@@ -16,8 +17,10 @@ abstract class Routes {
       return MaterialPageRoute(builder: (context) => Signup());
       case "/login":
       return MaterialPageRoute(builder: (context) => Login());
-        case "/vindor":
+      case "/vendor":
       return MaterialPageRoute(builder: (context) => Vendor());
+      case "/editproduct":
+      return MaterialPageRoute(builder: (context) => EditProduct());
       default:
       return MaterialPageRoute(builder: (context) => Login());
     }
@@ -31,6 +34,10 @@ abstract class Routes {
       return CupertinoPageRoute(builder: (context) => Signup());
       case "/login":
       return CupertinoPageRoute(builder: (context) => Login());
+      case "/vendor":
+      return CupertinoPageRoute(builder: (context) => Vendor());
+      case "/editproduct":
+      return CupertinoPageRoute(builder: (context) => EditProduct());
       default:
       return CupertinoPageRoute(builder: (context) => Login());
     }

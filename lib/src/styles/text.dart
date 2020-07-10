@@ -9,15 +9,32 @@ abstract class TextStyles {
     );
   }
 
+  static TextStyle get subTitle {
+    return GoogleFonts.economica(
+      textStyle: TextStyle(color: AppColors.straw, fontSize: 30.0, fontWeight: FontWeight.bold ),
+    );
+  }
+
   static TextStyle get navTitle {
     return GoogleFonts.poppins(
       textStyle: TextStyle(color: AppColors.darkblue,fontWeight: FontWeight.bold ),
     );
   }
 
+  static TextStyle get navTitleMaterial {
+    return GoogleFonts.poppins(
+      textStyle: TextStyle(color: Colors.white,fontWeight: FontWeight.bold ),
+    );
+  }
   static TextStyle get body {
     return GoogleFonts.roboto(
       textStyle: TextStyle(color: AppColors.darkgrey, fontSize: 16.0),
+    );
+  }
+
+  static TextStyle get picker {
+    return GoogleFonts.roboto(
+      textStyle: TextStyle(color: AppColors.darkgrey, fontSize: 35.0),
     );
   }
 

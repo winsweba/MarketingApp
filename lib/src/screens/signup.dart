@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:MarketingApp/src/blocs/auth_bloc.dart';
 import 'package:MarketingApp/src/styles/base.dart';
 import 'package:MarketingApp/src/styles/text.dart';
+import 'package:MarketingApp/src/widgets/alert.dart';
 import 'package:MarketingApp/src/widgets/button.dart';
 import 'package:MarketingApp/src/widgets/social_button.dart';
 import 'package:MarketingApp/src/widgets/textfield.dart';
@@ -12,19 +15,36 @@ import 'dart:io';
 import 'package:provider/provider.dart';
 
 class Signup extends StatefulWidget{
+
+ 
   @override
   _SignupState createState() => _SignupState();
 }
 
 class _SignupState extends State<Signup> {
+ StreamSubscription _userSubscription;
+  StreamSubscription _errorMessagSubscription;
 
   @override
   void initState() {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
-    authBloc.user.listen((user) {
+    _userSubscription = authBloc.user.listen((user) {
       if(user != null ) Navigator.pushReplacementNamed(context, '/landing');
     });
+    _errorMessagSubscription = authBloc.errorMessage.listen((errorMessage) {
+      if(errorMessage != ''){
+        // Show our Alert
+        AppAlerts.showErrorDialog(Platform.isIOS, context ,errorMessage).then((_) => authBloc.clearErrorMessage());
+      }
+    });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _userSubscription.cancel();
+    _errorMessagSubscription.cancel();
+    super.dispose();
   }
 
    @override
