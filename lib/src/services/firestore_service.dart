@@ -8,7 +8,15 @@ class FirestoreService{
   Firestore _db = Firestore.instance;
 
   Future<void> addUser(User user){
-    return _db.collection('users').document(user.userId).setData(user.toMap());
+    return _db
+    .collection('users')
+    .document(user.userId)
+    .setData(user.toMap());
+  }
+
+  Future<Product> fetchProduct(String productId){
+    return _db.collection('products').document(productId)
+    .get().then((snapshot) => Product.fromFirestore(snapshot.data));
   }
 
   Future<User> fetchUser(String userId){
@@ -21,7 +29,7 @@ class FirestoreService{
     .map<String>((type) => type.toString()).toList());
   }
 
-  Future<void> addProduct(Product product){
+  Future<void> setProduct(Product product){
     return _db
     .collection('products')
     .document(product.productId)

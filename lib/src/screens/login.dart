@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
               AppSocialButton(
                 socialType: SocialType.Facebooke,
               ),
-              SizedBox(height: 18.0),
+              SizedBox(width: 18.0),
               AppSocialButton(
                 socialType: SocialType.Google,
               ),

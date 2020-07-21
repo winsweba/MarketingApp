@@ -12,6 +12,7 @@ class AppTextField extends StatefulWidget {
   final bool obscureText;
   final Function(String) onChanged;
   final String errorText;
+  final String initialText;
 
   AppTextField({
     @required this.isIOS,
@@ -22,6 +23,7 @@ class AppTextField extends StatefulWidget {
     this.obscureText = false,
     this.onChanged,
     this.errorText,
+    this.initialText,
   });
 
   @override
@@ -37,6 +39,7 @@ class _AppTextFieldState extends State<AppTextField> {
   void initState() {
     _node = FocusNode();
     _controller = TextEditingController();
+    if (widget.initialText != null ) _controller.text = widget.initialText;
     _node.addListener(_handleFocusChange);
     displayCupertinoErrorBorder = false;
     super.initState();
@@ -83,6 +86,7 @@ class _AppTextFieldState extends State<AppTextField> {
               obscureText: widget.obscureText,
               onChanged: widget.onChanged,
               focusNode: _node,
+              controller: _controller,
             ),
             (widget.errorText != null) ? Padding(
               padding: const EdgeInsets.only(top: 5.0, left: 10.0 ),
@@ -105,6 +109,7 @@ class _AppTextFieldState extends State<AppTextField> {
           decoration:
               TextFieldStyles.materailDecoration(widget.hintText, widget.materialIcon, widget.errorText),
           obscureText: widget.obscureText,
+          controller: _controller,
           onChanged: widget.onChanged,
         ),
       );
