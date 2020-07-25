@@ -40,6 +40,7 @@ class Products extends StatelessWidget{
                       price: product.unitPrice,
                       productName: product.productName,
                       unitType: product.unitType,
+                      imageUrl: product.imageUrl,
                     ),
                     onTap: () => Navigator.of(context).pushNamed('/editproduct/${product.productId}'),
                   );
@@ -53,8 +54,7 @@ class Products extends StatelessWidget{
                 color: AppColors.straw,
                 child: (Platform.isIOS) 
                 ? Icon(CupertinoIcons.add, color: Colors.white, size: 35.0)
-                : Icon(Icons.add, color: Colors.white, size: 35.0),
-                
+                : Icon(Icons.add, color: Colors.white, size: 35.0),           
               ),
               onTap: () => Navigator.of(context).pushNamed('/editproduct'),
             ),

@@ -1,18 +1,16 @@
-import 'package:MarketingApp/src/app.dart';
 import 'package:MarketingApp/src/blocs/auth_bloc.dart';
 import 'package:MarketingApp/src/blocs/product_bloc.dart';
 import 'package:MarketingApp/src/models/product.dart';
-import 'package:MarketingApp/src/models/user.dart';
 import 'package:MarketingApp/src/styles/base.dart';
 import 'package:MarketingApp/src/styles/colors.dart';
 import 'package:MarketingApp/src/styles/text.dart';
 import 'package:MarketingApp/src/widgets/button.dart';
 import 'package:MarketingApp/src/widgets/dropdown_button.dart';
-import 'package:MarketingApp/src/widgets/products.dart';
 import 'package:MarketingApp/src/widgets/sliver_scaffold.dart';
 import 'package:MarketingApp/src/widgets/textfield.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'dart:io';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -32,7 +30,18 @@ class _EditProductState extends State<EditProduct> {
   void initState() {
     var productBloc = Provider.of<ProductBloc>(context, listen: false);
     productBloc.productSaved.listen((saved) { 
-      if(saved != null && saved == true ) Navigator.of(context).pop();
+      if(saved != null && saved == true && context != null ){
+        Fluttertoast.showToast(msg: "Product Saved" ,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 2,
+        backgroundColor: AppColors.lightblue,
+        textColor: Colors.white,
+        fontSize: 16.0, 
+        );
+
+        Navigator.of(context).pop();
+      } 
     });
     super.initState();
   }
@@ -154,9 +163,28 @@ class _EditProductState extends State<EditProduct> {
                 onChanged: productBloc.changeAvailableUnits,
               );
             }),
-        AppButton( 
-          buttonType: ButtonType.Straw, 
-          buttonText: 'Add Image'),
+         StreamBuilder<bool>(
+          stream: productBloc.isUploading,
+          builder: (context, snapshot) {  
+            return (!snapshot.hasData || snapshot.data == false)
+            ? Container()
+            : Center(child: (Platform.isIOS) ? CupertinoActivityIndicator() : CircularProgressIndicator(),);
+          },), 
+        StreamBuilder<String>(
+          stream: productBloc.imageUrl,
+          builder: (context, snapshot) {
+            if(!snapshot.hasData || snapshot.data == "")
+            return AppButton(buttonType: ButtonType.Straw,buttonText: 'Add Image',onPressed: productBloc.pickImage,);
+
+            return Column(children: <Widget>[
+                Padding(
+                  padding: BaseStyles.listPadding,
+                  child: Image.network(snapshot.data),
+                ),
+              AppButton(buttonType: ButtonType.Straw,buttonText: 'Change Image',onPressed: productBloc.pickImage,),
+            ]);
+          }
+        ),
         StreamBuilder<Object>(
           stream: productBloc.isValid,
           builder: (context, snapshot) {
@@ -183,12 +211,14 @@ class _EditProductState extends State<EditProduct> {
       productBloc.changeProductName(product.productName);
       productBloc.changeUnitPrice(product.unitPrice.toString());
       productBloc.changeAvailableUnits(product.availableUnits.toString());
+      productBloc.changeImageUrl(product.imageUrl ?? "");
     }else{
       //Add
       productBloc.changeUnitType(null);
-       productBloc.changeProductName(null);
+      productBloc.changeProductName(null);
       productBloc.changeUnitPrice(null);
       productBloc.changeAvailableUnits(null);
+      productBloc.changeImageUrl('');
     }
   }
 
