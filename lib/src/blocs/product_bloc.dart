@@ -91,7 +91,7 @@ class ProductBloc {
     if(permissionStatus.isGranted){
       //Get Image From Divce 
     image =await _picker.getImage(source: ImageSource.gallery);
-    print(image.path);
+    
     
     //Upload to Firebase
     if(image != null) {
