@@ -5,10 +5,14 @@ import 'package:MarketingApp/src/styles/tab_bar.dart';
 import 'package:MarketingApp/src/widgets/customer_scaffold.dart';
 import 'package:MarketingApp/src/widgets/navbar.dart';
 import 'package:MarketingApp/src/widgets/orders.dart';
+import 'package:MarketingApp/src/widgets/products_customer.dart';
 import 'package:MarketingApp/src/widgets/products.dart';
 import 'package:MarketingApp/src/widgets/profile.dart';
+import 'package:MarketingApp/src/widgets/profile_customer.dart';
+import 'package:MarketingApp/src/widgets/shopping_bag.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:io';
 
 import 'package:provider/provider.dart';
@@ -27,7 +31,7 @@ class Customer extends StatefulWidget{
       indicatorColor: TabBarStyle.indicatorColor,
       tabs: <Widget> [ 
         Tab(icon: Icon(Icons.list)),
-        Tab(icon: Icon(Icons.shopping_cart)),
+        Tab(icon: Icon(FontAwesomeIcons.shoppingBag)),
         Tab(icon: Icon(Icons.person)),
       ] 
       );
@@ -81,9 +85,9 @@ class _CustomerState extends State<Customer> {
             ];
           },
           body: TabBarView(children: <Widget>[
-            Products(),
-            Orders(),
-            Profile(),
+            ProductsCustomer(),
+            ShoppingBag(),
+            ProfileCustomer(),
           ]),
           )
         ),

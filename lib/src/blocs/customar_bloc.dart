@@ -1,4 +1,5 @@
 import 'package:MarketingApp/src/models/market.dart';
+import 'package:MarketingApp/src/models/product.dart';
 import 'package:MarketingApp/src/services/firestore_service.dart';
 
 class CustomerBloc{
@@ -6,7 +7,7 @@ class CustomerBloc{
 
   //Get
   Stream<List<Market>> get fetchUpcomingMarkets => db.fetchUpcomingMarkets();
-
+  Stream<List<Product>> get fetchAvailableProducts => db.fetchAvailableProducts();
   dispose(){
     
   }

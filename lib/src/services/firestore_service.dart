@@ -56,4 +56,14 @@ class FirestoreService{
    .toList());
  }
 
+ Stream<List<Product>> fetchAvailableProducts(){
+   return _db
+   .collection('products')
+   .where('availableUnits', isGreaterThan:  0)
+   .snapshots()
+   .map((query) => query.documents)
+   .map((snapshot) => snapshot.map((document) => Product.fromFirestore(document.data))
+   .toList());
+ }
+
 }
