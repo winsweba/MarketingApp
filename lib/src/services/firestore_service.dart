@@ -1,6 +1,7 @@
 import 'package:MarketingApp/src/models/market.dart';
 import 'package:MarketingApp/src/models/product.dart';
 import 'package:MarketingApp/src/models/application_user.dart';
+import 'package:MarketingApp/src/models/vendor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreService{
@@ -65,6 +66,22 @@ class FirestoreService{
    .map((query) => query.docs)
    .map((snapshot) => snapshot.map((doc) => Product.fromFirestore(doc.data()))
    .toList());
+ }
+
+ Future<Vendor> fetchVendor(String vendorId){
+   return _db
+   .collection('vendors')
+   .doc(vendorId)
+   .get().then((snapshot) => Vendor.fromFirestore(snapshot.data()));
+ }
+
+ Future<void> setVendor(Vendor vendor){
+   var options = SetOptions(merge:true);
+
+   return _db
+   .collection('vendors')
+   .doc(vendor.vendorId)
+   .set(vendor.toMap(), options);
  }
 
 }

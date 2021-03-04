@@ -21,10 +21,17 @@ class Profile extends StatelessWidget{
   }
 
   Widget pageBody(BuildContext context){
-    var authBloc = Provider.of<AuthBloc>(context);
+    // var authBloc = Provider.of<AuthBloc>(context);
+    // return Center(child:(Platform.isIOS)
+    // ? CupertinoButton(child: Text('Logout'), onPressed: () => authBloc.logout() , )
+    // : FlatButton(child: Text('Logout'), onPressed: () => authBloc.logout() , ) 
+    // );
+
     return Center(child:(Platform.isIOS)
-    ? CupertinoButton(child: Text('Logout'), onPressed: () => authBloc.logout() , )
-    : FlatButton(child: Text('Logout'), onPressed: () => authBloc.logout() , ) 
+    ? CupertinoButton(
+      child: Text('Add'), onPressed: () => Navigator.of(context).pushNamed("/editvendor") , )
+    : FlatButton(
+      child: Text('Add'), onPressed: () => Navigator.of(context).pushNamed("/editvendor") , ), 
     );
   }
 }
