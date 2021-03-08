@@ -23,7 +23,7 @@ abstract class Routes {
       return MaterialPageRoute(builder: (context) => Vendor());
       case "/editproduct":
       return MaterialPageRoute(builder: (context) => EditProduct());
-      case "/editvendor ":
+      case "/editvendor":
       return MaterialPageRoute(builder: (context) => EditVendor());
       default:
 
@@ -32,6 +32,8 @@ abstract class Routes {
       return MaterialPageRoute(builder: (context) => EditProduct(productId: routeArray[2],));
       } else if (settings.name.contains('/customer/')) {
       return MaterialPageRoute(builder: (context) => Customer(marketId: routeArray[2],));
+      }else if (settings.name.contains('/editvendor/')) {
+      return MaterialPageRoute(builder: (context) => EditVendor(vendorId: routeArray[2],));
       }
 
       return MaterialPageRoute(builder: (context) => Login());
@@ -50,7 +52,7 @@ abstract class Routes {
       return CupertinoPageRoute(builder: (context) => Vendor());
       case "/editproduct":
       return CupertinoPageRoute(builder: (context) => EditProduct());
-      case "/editvendor ":
+      case "/editvendor":
       return CupertinoPageRoute(builder: (context) => EditVendor());
       default:
 
@@ -59,6 +61,8 @@ abstract class Routes {
       return CupertinoPageRoute(builder: (context) => EditProduct(productId: routeArray[2],));
       }else if (settings.name.contains('/customer/')) {
       return CupertinoPageRoute(builder: (context) => Customer(marketId: routeArray[2],));
+      }else if (settings.name.contains('/editvendor/')) {
+      return CupertinoPageRoute(builder: (context) => EditVendor(vendorId: routeArray[2],));
       }
 
       return CupertinoPageRoute(builder: (context) => Login());

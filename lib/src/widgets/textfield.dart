@@ -12,6 +12,7 @@ class AppTextField extends StatefulWidget {
   final bool obscureText;
   final Function(String) onChanged;
   final String errorText;
+  final int maxLine;
   final String initialText;
 
   AppTextField({
@@ -24,6 +25,7 @@ class AppTextField extends StatefulWidget {
     this.onChanged,
     this.errorText,
     this.initialText,
+    this.maxLine = 1
   });
 
   @override
@@ -87,6 +89,7 @@ class _AppTextFieldState extends State<AppTextField> {
               onChanged: widget.onChanged,
               focusNode: _node,
               controller: _controller,
+              maxLines: widget.maxLine,
             ),
             (widget.errorText != null) ? Padding(
               padding: const EdgeInsets.only(top: 5.0, left: 10.0 ),
@@ -111,6 +114,7 @@ class _AppTextFieldState extends State<AppTextField> {
           obscureText: widget.obscureText,
           controller: _controller,
           onChanged: widget.onChanged,
+          maxLines: widget.maxLine,
         ),
       );
     }
